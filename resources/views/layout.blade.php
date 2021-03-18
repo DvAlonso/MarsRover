@@ -12,7 +12,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,700;1,400&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,600;0,700;1,400&display=swap" rel="stylesheet"> 
 
         <style>
             body {
@@ -25,12 +25,14 @@
             }
         </style>
 
+        @stack('styles')
+
         <!-- Livewire core files -->
         <livewire:styles />
     </head>
     <body>
         <main class="container d-flex h-100">
-            <div class="card mx-auto my-auto w-75">
+            <div class="card mx-auto my-auto w-100">
                 <div class="card-header text-center bg-transparent border-bottom-0">
                     <h1 class="main-title my-2">Mars Rover Mission</h1>
                 </div>
@@ -47,5 +49,7 @@
         <!-- jQuery & Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+        @stack('scripts')
     </body>
 </html>
