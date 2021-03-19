@@ -40,4 +40,13 @@ class Mission extends Component
         $this->loadingMessage = null;
     }
 
+    public function loadMap()
+    {
+        $this->emit('loadMap', [
+            'x' => $this->mission->rover_starting_x, 
+            'y' => $this->mission->rover_starting_y,
+            'obstacles' => $this->mission->obstacles
+        ]);
+    }
+
 }

@@ -38,13 +38,26 @@ class MissionMap {
     let scaledX = x*(this.gridScale)
     let scaledY = y*(this.gridScale)
     this.context.fillStyle = '#000'
-    this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale);
+    this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
   }
 
   /**
-   * Draws red dots representing obstacles
+   * Given an array of obstacles, renders each one as a single red dot
+   * @param array data 
+   */
+  drawObstacles (data) {
+    data.forEach(element => {
+      this.drawObstacle(element.x, element.y)
+    })
+  }
+
+  /**
+   * Draws a red dot representing an obstacle
    */
   drawObstacle (x,y) {
-
+    let scaledX = x*(this.gridScale)
+    let scaledY = y*(this.gridScale)
+    this.context.fillStyle = '#ff0000'
+    this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
   }
 }

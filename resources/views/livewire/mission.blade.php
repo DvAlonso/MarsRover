@@ -21,11 +21,17 @@
             </div>
         </form>
         @elseif($mission->status == 'landed')
-        <div class="mx-auto">
-            <h5 class="text-center" style="font-weight: 600">Rover status: <span class="text-success">Landed</span></h5>
-            <p style="font-size: 14px;" class="text-center">
-                Rover was successfully deployed to x: {{ $mission->rover_starting_x }} y: {{ $mission->rover_starting_y }}
-            </p>
+        <div class="d-flex flex-column w-100">
+            <div class="d-flex flex-column mx-auto">
+                <h5 class="text-center" style="font-weight: 600">Rover status: <span class="text-success">Landed</span></h5>
+                <p style="font-size: 14px;" class="text-center">
+                    Rover was successfully deployed to x: {{ $mission->rover_starting_x }} y: {{ $mission->rover_starting_y }}
+                </p>
+            </div>
+            <div class="d-flex flex-column mx-auto">
+                <h5 class="mx-auto" style="font-weight: 600">Map</h5>
+                <canvas wire:init="loadMap" class="mx-auto" canvas id="mission-map" width="600px" height="600px"></canvas>
+            </div>
         </div>
         {{-- <div class="mx-auto d-flex flex-column w-100">
             <h5 class="mx-auto" style="font-weight: 600">Map</h5>
