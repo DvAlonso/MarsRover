@@ -15,6 +15,11 @@ class CreateMissionsTable extends Migration
     {
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
+            $table->uuid('key');
+            $table->enum('status', ['pending_landing', 'landed', 'completed', 'aborted'])->default('pending_landing');
+            $table->integer('rover_starting_x')->nullable();
+            $table->integer('rover_starting_y')->nullable();
+            $table->json('obstacles')->nullable();
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,5 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/mission', function () {
-    return view('mission');
-})->name('mission');
+Route::get('/mission', [MissionController::class, 'start'])->name('mission.new');
+Route::get('/mission/{mission}', [MissionController::class, 'view'])->name('mission.view');
