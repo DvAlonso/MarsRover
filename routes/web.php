@@ -16,7 +16,11 @@ use App\Http\Controllers\MissionController;
 
 Route::get('/', function () {
     return view('landing');
-});
+})->name('home');
 
 Route::get('/mission', [MissionController::class, 'start'])->name('mission.new');
 Route::get('/mission/{mission}', [MissionController::class, 'view'])->name('mission.view');
+
+Route::fallback(function () {
+    return redirect('/');
+});

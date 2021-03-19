@@ -23,6 +23,9 @@
             .main-title {
                 color: #11AEFA;
             }
+            .main-title-link:hover {
+                text-decoration: none;
+            }
         </style>
 
         @stack('styles')
@@ -34,7 +37,9 @@
         <main class="container d-flex h-100">
             <div class="card mx-auto my-auto w-100">
                 <div class="card-header text-center bg-transparent border-bottom-0">
-                    <h1 class="main-title my-2">Mars Rover Mission</h1>
+                    <a class="main-title-link" href='{{ route('home') }}'>
+                        <h1 class="main-title my-2">Mars Rover Mission</h1>
+                    </a>
                 </div>
                 @yield('content')
                 <div class="card-footer text-center bg-transparent border-top-0">
@@ -44,7 +49,7 @@
         </main>
 
         <!-- Livewire core files -->
-        <livewire:styles />
+        <livewire:scripts />
 
         <!-- jQuery & Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>

@@ -38,4 +38,23 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    public function render($request, Throwable $e)
+    {
+        if($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException && $e->getModel() === 'App\Models\Mission')
+        {
+            return redirect('/')->with('status', 'Mission not found');
+        }
+
+        return parent::render($request, $e);
+    }
 }

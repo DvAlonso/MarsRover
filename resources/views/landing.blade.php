@@ -7,16 +7,32 @@
         <p>You can start a new mission in a randomly generated environment</p>
         <a class="btn btn-sm btn-dark mb-5" href="{{ route('mission.new') }}">Start a new mission</a>
         <p class="mb-3">Or review an already completed mission</p>
-        <form method="POST">
+        <div>
             <div class="input-group mb-3">
-                <input name="id" type="text" class="form-control form-control form-control-sm" placeholder="Enter mission ID">
+                <input id="mission_id" type="text" class="form-control form-control form-control-sm" placeholder="Enter mission ID">
                 <div class="input-group-append">
-                    <button class="btn btn-dark btn-sm" type="button">
+                    <button onClick="findMission()" class="btn btn-dark btn-sm" type="button">
                         <i class="bi bi-search"></i>
                     </button>
                 </div>
             </div>
-        </form>
+        </div>
+        @if (session('status'))
+            <div class="alert alert-danger">
+                {{ session('status') }}
+            </div>
+        @endif
     </div>
 
 @stop
+
+@push('scripts')
+    <script>
+        function findMission () {
+            let id = document.getElementById('mission_id').value
+            if(id.length > 0) {
+                window.location.href = '/mission/'+id
+            }
+        }
+    </script>
+@endpush
