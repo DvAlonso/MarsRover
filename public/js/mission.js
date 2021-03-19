@@ -38,7 +38,7 @@ class MissionMap {
     let scaledX = x*(this.gridScale)
     let scaledY = y*(this.gridScale)
     this.context.fillStyle = '#000'
-    this.context.fillRect(scaledX,scaledY,5,5);
+    this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale);
   }
 
   /**
@@ -47,12 +47,4 @@ class MissionMap {
   drawObstacle (x,y) {
 
   }
-}
-
-let missionMap = new MissionMap()
-
-function drawRover() {
-  let x = document.getElementById('rover-x').value
-  let y = document.getElementById('rover-y').value
-  missionMap.drawRover(x,y)
 }

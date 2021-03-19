@@ -20,10 +20,11 @@
                 background: #1E1E24;
                 height: 100vh;
             }
-            .main-title {
-                color: #11AEFA;
+            .main-title-link {
+                color: #11AEFA !important;
             }
             .main-title-link:hover {
+                color: #11AEFA !important;
                 text-decoration: none;
             }
         </style>
@@ -35,11 +36,13 @@
     </head>
     <body>
         <main class="container d-flex h-100">
-            <div class="card mx-auto my-auto w-100">
+            <div class="card mx-auto my-auto " style="width: 80%;">
                 <div class="card-header text-center bg-transparent border-bottom-0">
-                    <a class="main-title-link" href='{{ route('home') }}'>
-                        <h1 class="main-title my-2">Mars Rover Mission</h1>
-                    </a>
+                    <h1 class="my-2">
+                        <a class="main-title-link" href='{{ route('home') }}'>
+                            Mars Rover Mission
+                        </a>
+                    </h1>
                 </div>
                 @yield('content')
                 <div class="card-footer text-center bg-transparent border-top-0">
@@ -52,9 +55,13 @@
         <livewire:scripts />
 
         <!-- jQuery & Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
+        <script>
+            const _token = '{{ csrf_token() }}'
+        </script>
         @stack('scripts')
     </body>
 </html>

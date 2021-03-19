@@ -33,4 +33,36 @@ class MissionController extends Controller
     {
         return view('mission')->with(['mission' => $mission]);
     }
+
+
+    public function launch(Request $request)
+    {
+        $request->validate([
+            'landingX' => 'integer|between:0,99',
+            'landingY' => 'integer|between:0,99',
+            'mission' => 'required|exists:missions,key'
+        ]);
+
+        $mission = Mission::where('key', $request->input('mission'))->first();
+
+        if($mission->status !== 'pending_landing')
+        {
+            return response()->json([
+                'message' => 'Rover has already been launched',
+                'code' => '422'
+            ], 422);
+        }
+
+        $mission->launchRover($request->input('landingX'), $request->input('landingY'));
+
+        $mission->generateObstacles();
+
+        // Simulate some delay
+        sleep(2);
+
+        return response()->json([
+            'message' => 'Rover launched successfully',
+            'code' => '200'
+        ], 200);
+    }
 }
