@@ -30,6 +30,16 @@ class Mission extends Model
     ];
 
     /**
+     * Get the map associated with the mission.
+     *
+     * @return Map
+     */
+    public function Map()
+    {
+        return $this->hasOne(Map::class);
+    }
+
+    /**
      * Get the route key for the model.
      *
      * @return string
@@ -55,37 +65,5 @@ class Mission extends Model
         $this->rover_starting_orientation = Arr::random(['n','w','e','s']);
         $this->status = 'landed';
         $this->save();
-    }
-
-    public function generateObstacles()
-    {
-        $amountOfObstacles = rand(50, 100);
-        $obstacles = [];
-
-        for($i = 0; $i < $amountOfObstacles; $i++)
-        {
-            $coords = $this->randomCoords();
-            array_push($obstacles, $coords);
-        }
-
-        $this->obstacles = $obstacles;
-        $this->save();
-    }
-
-    private function randomCoords()
-    {
-        $coords = [
-            'x' => rand(0, 99),
-            'y' => rand(0, 99)
-        ];
-
-        if($coords['x'] === $this->rover_starting_x && $coords['y'] === $this->rover_starting_y)
-        {
-            $this->randomCoords();
-        }
-        else {
-            return $coords;
-        }
-        
     }
 }

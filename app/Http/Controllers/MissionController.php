@@ -53,9 +53,13 @@ class MissionController extends Controller
             ], 422);
         }
 
+        // Launch the rover into the specified starting position
         $mission->launchRover($request->input('landingX'), $request->input('landingY'));
 
-        $mission->generateObstacles();
+        
+        $map = $mission->Map()->create();
+        $map->generateObstacles();
+        
 
         // Simulate some delay
         sleep(2);
