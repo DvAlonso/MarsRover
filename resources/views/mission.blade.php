@@ -13,6 +13,12 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
+        canvas {
+            border-style: outset;
+            border-width: 3px;
+            border-color: #11AEFA;
+        }
     </style>
 @endpush
 

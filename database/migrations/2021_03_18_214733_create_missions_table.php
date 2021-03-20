@@ -22,6 +22,9 @@ class CreateMissionsTable extends Migration
             $table->enum('rover_starting_orientation', ['n','w','e','s'])->default('n');
             $table->string('commands')->nullable();
             $table->json('commands_output')->nullable();
+            $table->integer('rover_finishing_x')->nullable();
+            $table->integer('rover_finishing_y')->nullable();
+            $table->enum('rover_finishing_orientation', ['n','w','e','s'])->nullable();
             $table->timestamps();
         });
     }

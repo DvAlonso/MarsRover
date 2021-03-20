@@ -22,12 +22,45 @@ const app = {
       }
     })
 
+    // Prevent the user from entering non-desired commands
+    $(document).on('keydown', '#commands', function(event){
+      if(event.keyCode != 70 && event.keyCode != 76 && event.keyCode != 82 && event.keyCode != 8) {
+        event.preventDefault()
+      }
+    })
+
+    // On form submit
+    $(document).on('submit', '#commands-form', function (event) {
+      event.preventDefault()
+      let re = new RegExp('^[rRlLfF]*$')
+      let value = $('#commands').val()
+      if(re.test(value)){
+        $('#commands').removeClass('is-invalid')
+        let mission = $('#mission_id').val()
+        app.sendCommandsToRover(value, mission)
+      }
+      else{
+        $('#commands').addClass('is-invalid')
+      }
+    })
+
     Livewire.on('loadMap', (data) => {
       if (map == null) {
         map = new MissionMap()
       }
       map.drawRover(data.x, data.y)
       map.drawObstacles(data.obstacles)
+    })
+
+    Livewire.on('loadFinishedMap', (data) => {
+      if (map == null) {
+        map = new MissionMap()
+      }
+      map.drawObstacles(data.obstacles)
+      map.drawOutput(data.output)
+      map.drawStartingPoint(data.starting_x, data.starting_y)
+      map.drawRover(data.x, data.y)
+      map.zoom()
     })
 
   },
@@ -44,5 +77,17 @@ const app = {
         Livewire.emit('loaded')
       })
   },
+
+  sendCommandsToRover: function (commands, mission) {
+    Livewire.emit('loading', 'Sending input commands to the rover...')
+    axios.post('/api/mission/commands', {
+      _token,
+      commands,
+      mission
+    })
+      .then(function () {
+        Livewire.emit('loaded')
+      })
+  }
 
 }

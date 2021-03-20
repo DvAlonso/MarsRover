@@ -60,4 +60,31 @@ class MissionMap {
     this.context.fillStyle = '#ff0000'
     this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
   }
+
+  drawOutput (output) {
+    output.forEach(element => {
+      if(element.couldMove) {
+        this.drawPath(element.newX, element.newY)
+      }
+    })
+  }
+
+  drawPath (x, y) {
+    let scaledX = x*(this.gridScale)
+    let scaledY = y*(this.gridScale)
+    this.context.fillStyle = '#11AEFA'
+    this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
+  }
+
+  drawStartingPoint (x, y) {
+    let scaledX = x*(this.gridScale)
+    let scaledY = y*(this.gridScale)
+    this.context.fillStyle = '#0000ff'
+    this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
+  }
+
+  zoom () {
+    console.log('as')
+    this.context.scale(40, 40)
+  }
 }

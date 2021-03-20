@@ -59,4 +59,34 @@ class Map extends Model
         }
         
     }
+
+    public function canMoveTo($targetX, $targetY)
+    {
+        // Check if target position is out of bounds
+        if($targetX < 0 || $targetX > 99 || $targetY < 0 || $targetY > 99)
+        {
+            return [
+                'couldMove' => false,
+                'reason' => 'out_of_bounds'
+            ];
+        }
+
+        // Check if there is an obstacle at the target position
+        foreach($this->obstacles as $obstacle)
+        {
+            if($obstacle['x'] === $targetX)
+            {
+                if($obstacle['y'] === $targetY){
+                    return [
+                        'couldMove' => false,
+                        'reason' => 'obstacle'
+                    ];
+                }
+            }
+        }
+
+        return [
+            'couldMove' => true
+        ];
+    }
 }

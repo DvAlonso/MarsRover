@@ -49,4 +49,16 @@ class Mission extends Component
         ]);
     }
 
+    public function loadFinishedMap()
+    {
+        $this->emit('loadFinishedMap', [
+            'starting_x' => $this->mission->rover_starting_x,
+            'starting_y' => $this->mission->rover_starting_y,
+            'x' => $this->mission->rover_finishing_x, 
+            'y' => $this->mission->rover_finishing_y,
+            'obstacles' => $this->mission->Map->obstacles,
+            'output' => $this->mission->commands_output
+        ]);
+    }
+
 }

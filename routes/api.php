@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/mission/launch', [MissionController::class, 'launch']);
+Route::post('/mission/commands', [MissionController::class, 'moveRover']);

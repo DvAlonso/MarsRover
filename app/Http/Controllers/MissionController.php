@@ -35,6 +35,13 @@ class MissionController extends Controller
     }
 
 
+    /**
+     * Launch a rover into the specified position. Creates a new map
+     * associated to this mission and randomly generates the obstacles
+     *
+     * @param Request $request
+     * @return response
+     */
     public function launch(Request $request)
     {
         $request->validate([
@@ -56,16 +63,48 @@ class MissionController extends Controller
         // Launch the rover into the specified starting position
         $mission->launchRover($request->input('landingX'), $request->input('landingY'));
 
-        
+        // Create a map for this mission and generate the obastacles
         $map = $mission->Map()->create();
         $map->generateObstacles();
-        
 
-        // Simulate some delay
+        // Simulate some delay since we're sending commands into mars...
         sleep(2);
 
         return response()->json([
             'message' => 'Rover launched successfully',
+            'code' => '200'
+        ], 200);
+    }
+
+    public function moveRover(Request $request)
+    {
+        $request->validate([
+            'commands' => 'required|regex:/^[rRlLfF]*$/',
+            'mission' => 'required|exists:missions,key'
+        ]);
+
+        $mission = Mission::where('key', $request->input('mission'))->first();
+
+        if($mission->status !== 'landed')
+        {
+            return response()->json([
+                'message' => 'Rover is not ready for command input',
+                'code' => '422'
+            ], 422);
+        }
+
+        // Save user input
+        $mission->commands = $request->input('commands');
+        $mission->save();
+        
+        // Move rover
+        $mission->moveRover();
+
+        // Simulate some delay since we're sending commands into mars...
+        sleep(2);
+
+        return response()->json([
+            'message' => 'Commands sent to rover successfully',
             'code' => '200'
         ], 200);
     }
