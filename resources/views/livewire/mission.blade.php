@@ -73,7 +73,7 @@
                 <div class="d-flex justify-content-start mb-3 w-100">
                     {{ $mission->status }}
                 </div>
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column" id="canvas-wrapper">
                     <h5 class="mx-auto" style="font-weight: 600">Map</h5>
                     <canvas wire:init="loadFinishedMap" class="mx-auto" canvas id="mission-map" width="600px"
                         height="600px"></canvas>

@@ -14,10 +14,14 @@
             -moz-appearance: textfield;
         }
 
-        canvas {
+        #mission-map {
             border-style: outset;
             border-width: 3px;
             border-color: #11AEFA;
+        }
+
+        #main-card {
+            width: 100% !important;
         }
     </style>
 @endpush
@@ -31,6 +35,7 @@
 @stop
 
 @push('scripts')
+    <script src="{{ asset('/js/wheelzoomjs/wheelzoom.js') }}"></script>
     <script src="{{ asset('/js/mission.js') }}"></script>
     <script src="{{ asset('/js/mission-control.js') }}"></script>
 @endpush

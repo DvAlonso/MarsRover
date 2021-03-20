@@ -27,6 +27,9 @@
                 color: #11AEFA !important;
                 text-decoration: none;
             }
+            #main-card {
+                width: 80%;
+            }
         </style>
 
         @stack('styles')
@@ -36,7 +39,7 @@
     </head>
     <body>
         <main class="container d-flex h-100">
-            <div class="card mx-auto my-auto " style="width: 80%;">
+            <div id="main-card" class="card mx-auto my-auto">
                 <div class="card-header text-center bg-transparent border-bottom-0">
                     <h1 class="my-2">
                         <a class="main-title-link" href='{{ route('home') }}'>

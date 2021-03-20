@@ -82,9 +82,4 @@ class MissionMap {
     this.context.fillStyle = '#0000ff'
     this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
   }
-
-  zoom () {
-    console.log('as')
-    this.context.scale(40, 40)
-  }
 }

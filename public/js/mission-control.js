@@ -60,7 +60,17 @@ const app = {
       map.drawOutput(data.output)
       map.drawStartingPoint(data.starting_x, data.starting_y)
       map.drawRover(data.x, data.y)
-      map.zoom()
+
+      let canvasAsDataUrl = document.getElementById('mission-map').toDataURL()
+      $('#mission-map').remove()
+      let img = document.createElement('img')
+      img.id = 'mission-map'
+      img.src = canvasAsDataUrl
+      img.style.width = '600px'
+      img.style.height = '600px'
+      $('#canvas-wrapper').append(img)
+
+      wheelzoom(document.querySelectorAll('#mission-map'));
     })
 
   },
