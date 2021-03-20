@@ -19,6 +19,7 @@ class CreateMissionsTable extends Migration
             $table->enum('status', ['pending_landing', 'landed', 'completed', 'aborted'])->default('pending_landing');
             $table->integer('rover_starting_x')->nullable();
             $table->integer('rover_starting_y')->nullable();
+            $table->enum('rover_starting_orientation', ['n','w','e','s'])->default('n');
             $table->json('obstacles')->nullable();
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Mission extends Model
 {
@@ -51,6 +52,7 @@ class Mission extends Model
     {
         $this->rover_starting_x = $x;
         $this->rover_starting_y = $y;
+        $this->rover_starting_orientation = Arr::random(['n','w','e','s']);
         $this->status = 'landed';
         $this->save();
     }
