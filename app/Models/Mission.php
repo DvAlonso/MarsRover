@@ -21,15 +21,6 @@ class Mission extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'obstacles' => 'array',
-    ];
-
-    /**
      * Get the map associated with the mission.
      *
      * @return Map

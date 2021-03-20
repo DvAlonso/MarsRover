@@ -10,6 +10,15 @@ class Map extends Model
     use HasFactory;
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'obstacles' => 'array',
+    ];
+
+    /**
      * Get the mission associated to this map
      *
      * @return Mission
