@@ -75,8 +75,6 @@ const app = {
       let img = document.createElement('img')
       img.id = 'mission-map'
       img.src = canvasAsDataUrl
-      img.style.width = '600px'
-      img.style.height = '600px'
       $('#canvas-wrapper').append(img)
       wheelzoom(document.querySelectorAll('#mission-map'));
 

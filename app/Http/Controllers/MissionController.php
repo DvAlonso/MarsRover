@@ -45,8 +45,8 @@ class MissionController extends Controller
     public function launch(Request $request)
     {
         $request->validate([
-            'landingX' => 'integer|between:0,99',
-            'landingY' => 'integer|between:0,99',
+            'landingX' => 'nullable|integer|between:0,99',
+            'landingY' => 'nullable|integer|between:0,99',
             'mission' => 'required|exists:missions,key'
         ]);
 
@@ -60,8 +60,12 @@ class MissionController extends Controller
             ], 422);
         }
 
+        // Default values for landing if the user didn't input any
+        $landingX = is_null($request->input('landingX')) ? rand(0,99) : $request->input('landingX');
+        $landingY = is_null($request->input('landingY')) ? rand(0,99) : $request->input('landingY');
+
         // Launch the rover into the specified starting position
-        $mission->launchRover($request->input('landingX'), $request->input('landingY'));
+        $mission->launchRover($landingX, $landingY);
 
         // Create a map for this mission and generate the obastacles
         $map = $mission->Map()->create();

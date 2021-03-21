@@ -97,11 +97,13 @@
                         <a class="btn btn-sm btn-dark mt-3" href="{{ route('mission.new') }}">New mission</a>
                     </div>
                 </div>
-                <div class="d-flex flex-column" id="canvas-wrapper">
+                <div class="d-flex flex-column">
                     <h5 class="mx-auto mb-1" style="font-weight: 600">Map</h5>
                     <span class="mx-auto mb-2" style="font-size:12px">Use mouse to zoom / drag</span>
-                    <canvas wire:init="loadFinishedMap" class="mx-auto" canvas id="mission-map" width="600px"
+                    <div id="canvas-wrapper">
+                        <canvas wire:init="loadFinishedMap" class="mx-auto" id="mission-map" width="600px"
                         height="600px"></canvas>
+                    </div>
                 </div>
             </div>
         @endif
