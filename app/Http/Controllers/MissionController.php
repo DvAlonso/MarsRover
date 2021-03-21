@@ -76,6 +76,12 @@ class MissionController extends Controller
         ], 200);
     }
 
+    /**
+     * Moves rover based on inputted commands
+     *
+     * @param Request $request
+     * @return response
+     */
     public function moveRover(Request $request)
     {
         $request->validate([
@@ -85,6 +91,7 @@ class MissionController extends Controller
 
         $mission = Mission::where('key', $request->input('mission'))->first();
 
+        // Make sure the rover is ready to receive commands
         if($mission->status !== 'landed')
         {
             return response()->json([

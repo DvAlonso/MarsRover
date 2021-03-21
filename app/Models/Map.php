@@ -28,6 +28,12 @@ class Map extends Model
         return $this->belongsTo(Mission::class);
     }
 
+    /**
+     * Generates a random amount of obstacles (between 150 and 200)
+     * and saves them to this map
+     *
+     * @return void
+     */
     public function generateObstacles()
     {
         $amountOfObstacles = rand(150, 200);
@@ -43,6 +49,12 @@ class Map extends Model
         $this->save();
     }
 
+    /**
+     * Gets random coordinates within this map for obstacle generation.
+     * Tries to avoid placing obstacles on top of the rover
+     *
+     * @return void
+     */
     private function randomCoords()
     {
         $coords = [
@@ -60,6 +72,14 @@ class Map extends Model
         
     }
 
+    /**
+     * Simulates the rover moving to a target position.
+     * Returns an array with the result and the new position
+     *
+     * @param int $targetX
+     * @param int $targetY
+     * @return array
+     */
     public function canMoveTo($targetX, $targetY)
     {
         // Check if target position is out of bounds

@@ -67,31 +67,41 @@ class Mission extends Model
         $this->save();
     }
 
+    /**
+     * Moves the rover using the commands for this mission.
+     *
+     * @return void
+     */
     public function moveRover()
     {
+        // Get the commands and starting position / orientation
         $commands = str_split($this->commands);
         $orientation = $this->rover_starting_orientation;
         $currentX = $this->rover_starting_x;
         $currentY = $this->rover_starting_y;
-        $output = [];
 
+        // Foreach command
         foreach($commands as $command)
         {
+            // Get the target position and new orientation
             $targetX = $this->getTargetX($orientation, $command, $currentX);
             $targetY = $this->getTargetY($orientation, $command, $currentY);
             $resultingOrientation = $this->getResultingOrientation($orientation, $command);
 
+            // Simulate the rover moving to that position
             $canMoveTo = $this->Map->canMoveTo($targetX, $targetY);
 
+            // Update the log with the results
             $this->updateOutput($canMoveTo, $targetX, $targetY, $resultingOrientation);
 
+            // If the rover could move, update position and orientation and move on
             if($canMoveTo['couldMove'])
             {
                 $currentX = $targetX;
                 $currentY = $targetY;
                 $orientation = $resultingOrientation;
             }
-            else
+            else // If the rover couldnt move, save finishing position and abort mission
             {
                 $this->rover_finishing_x = $currentX;
                 $this->rover_finishing_y = $currentY;
@@ -103,6 +113,7 @@ class Mission extends Model
             }
         }
 
+        // If all the commands could be processed, save finishing position and mark as completed
         $this->rover_finishing_x = $currentX;
         $this->rover_finishing_y = $currentY;
         $this->rover_finishing_orientation = $orientation;
@@ -110,6 +121,15 @@ class Mission extends Model
         $this->save();
     }
 
+    /**
+     * Adds a new log entry for this mission
+     *
+     * @param array $canMoveTo
+     * @param int $targetX
+     * @param int $targetY
+     * @param string $resultingOrientation
+     * @return void
+     */
     private function updateOutput($canMoveTo, $targetX, $targetY, $resultingOrientation)
     {
         $output = is_null($this->commands_output) ? [] : $this->commands_output;
@@ -133,6 +153,14 @@ class Mission extends Model
         $this->save();
     }
 
+    /**
+     * Gets target X based on current, orientation and inputted command
+     *
+     * @param string $orientation
+     * @param string $command
+     * @param int $currentX
+     * @return void
+     */
     private function getTargetX($orientation, $command, $currentX)
     {
         if($orientation === 'n')
@@ -185,6 +213,14 @@ class Mission extends Model
         }
     }
 
+    /**
+     * Gets target Y based on current, orientation and inputted command
+     *
+     * @param string $orientation
+     * @param string $command
+     * @param int $currentY
+     * @return void
+     */
     private function getTargetY($orientation, $command, $currentY)
     {
         if($orientation === 'n')
@@ -237,6 +273,13 @@ class Mission extends Model
         }
     }
 
+    /**
+     * Gets resulting orientation of the move
+     *
+     * @param string $orientation
+     * @param string $command
+     * @return void
+     */
     private function getResultingOrientation($orientation, $command)
     {
         if($orientation === 'n')
