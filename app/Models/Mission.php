@@ -97,6 +97,7 @@ class Mission extends Model
                 $this->rover_finishing_y = $currentY;
                 $this->rover_finishing_orientation = $orientation;
                 $this->status = 'aborted';
+                $this->aborting_reason = $canMoveTo['reason'];
                 $this->save();
                 return;
             }

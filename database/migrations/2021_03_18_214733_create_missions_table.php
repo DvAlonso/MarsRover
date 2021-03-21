@@ -25,6 +25,7 @@ class CreateMissionsTable extends Migration
             $table->integer('rover_finishing_x')->nullable();
             $table->integer('rover_finishing_y')->nullable();
             $table->enum('rover_finishing_orientation', ['n','w','e','s'])->nullable();
+            $table->enum('aborting_reason', ['out_of_bounds', 'obstacle'])->nullable();
             $table->timestamps();
         });
     }

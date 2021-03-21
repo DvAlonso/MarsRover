@@ -30,6 +30,12 @@
             #main-card {
                 width: 80%;
             }
+            .bold {
+                font-weight: 700 !important;
+            }
+            .semi-bold {
+                font-weight: 600 !important;
+            }
         </style>
 
         @stack('styles')

@@ -30,7 +30,7 @@ class Map extends Model
 
     public function generateObstacles()
     {
-        $amountOfObstacles = rand(50, 100);
+        $amountOfObstacles = rand(150, 200);
         $obstacles = [];
 
         for($i = 0; $i < $amountOfObstacles; $i++)
@@ -67,7 +67,9 @@ class Map extends Model
         {
             return [
                 'couldMove' => false,
-                'reason' => 'out_of_bounds'
+                'reason' => 'out_of_bounds',
+                'newX' => $targetX,
+                'newY' => $targetY
             ];
         }
 
@@ -79,7 +81,9 @@ class Map extends Model
                 if($obstacle['y'] === $targetY){
                     return [
                         'couldMove' => false,
-                        'reason' => 'obstacle'
+                        'reason' => 'obstacle',
+                        'newX' => $targetX,
+                        'newY' => $targetY
                     ];
                 }
             }

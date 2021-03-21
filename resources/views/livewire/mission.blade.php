@@ -70,11 +70,36 @@
             </div>
         @else
             <div class="d-flex w-100">
-                <div class="d-flex justify-content-start mb-3 w-100">
-                    {{ $mission->status }}
+                <div class="d-flex flex-column mb-3" style="width: 40%">
+                    <h5 class="mb-3" style="font-weight:600">Mission report</h5>
+                    <p class="mb-1 text-secondary" >Mission result: 
+                        @if($mission->status === 'completed')
+                            <span class="text-success">Success</span>
+                        @else
+                            <span class="text-danger">Aborted</span>
+                        @endif
+                    </p>
+                    @if($mission->status === 'aborted')
+                    <p class="mb-1 text-secondary">Aborting reason: {{ $mission->aborting_reason }}</p>
+                    @endif
+                    <p class="mb-1 text-secondary">Last rover position: X={{ $mission->rover_finishing_x }} Y={{ $mission->rover_finishing_y }}</p>
+                    <p class="text-secondary">Last rover orientation: {{ $mission->rover_finishing_orientation }}</p>
+                    <h5 class="mb-3" style="font-weight:600">Mission Input</h5>
+                    <p class="mb-1 text-secondary">Starting rover position: X={{ $mission->rover_starting_x }} Y={{ $mission->rover_starting_y }}</p>
+                    <p class="mb-1 text-secondary">Starting rover orientation: {{ $mission->rover_starting_orientation }}</p>
+                    <p class="text-secondary" style="width:80%;">Input sent: {{ $mission->commands }}</p>
+                    <h5 class="mb-3" style="font-weight:600">Rover Output log</h5>
+                    <pre class="mb-4" style="border: 1px solid lightgray; width: 70%; max-height: 300px; overflow-y:scroll" id="output">
+                    </pre>
+                    <h5 class="" style="font-weight:600">Mission ID</h5>
+                    <span style="font-size:14px">{{ $mission->key }}</span>
+                    <div>
+                        <a class="btn btn-sm btn-dark mt-3" href="{{ route('mission.new') }}">New mission</a>
+                    </div>
                 </div>
                 <div class="d-flex flex-column" id="canvas-wrapper">
-                    <h5 class="mx-auto" style="font-weight: 600">Map</h5>
+                    <h5 class="mx-auto mb-1" style="font-weight: 600">Map</h5>
+                    <span class="mx-auto mb-2" style="font-size:12px">Use mouse to zoom / drag</span>
                     <canvas wire:init="loadFinishedMap" class="mx-auto" canvas id="mission-map" width="600px"
                         height="600px"></canvas>
                 </div>

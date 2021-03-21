@@ -34,7 +34,7 @@ const app = {
       event.preventDefault()
       let re = new RegExp('^[rRlLfF]*$')
       let value = $('#commands').val()
-      if(re.test(value)){
+      if(re.test(value) && value !== ''){
         $('#commands').removeClass('is-invalid')
         let mission = $('#mission_id').val()
         app.sendCommandsToRover(value, mission)
@@ -53,9 +53,7 @@ const app = {
     })
 
     Livewire.on('loadFinishedMap', (data) => {
-      if (map == null) {
-        map = new MissionMap()
-      }
+      map = new MissionMap()
       map.drawObstacles(data.obstacles)
       map.drawOutput(data.output)
       map.drawStartingPoint(data.starting_x, data.starting_y)
@@ -69,6 +67,8 @@ const app = {
       img.style.width = '600px'
       img.style.height = '600px'
       $('#canvas-wrapper').append(img)
+
+      $('#output').text(JSON.stringify(data.output, undefined, 2).replace('[', '{').replace(']', '}'))
 
       wheelzoom(document.querySelectorAll('#mission-map'));
     })
