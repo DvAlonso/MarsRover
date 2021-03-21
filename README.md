@@ -1,62 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><img src="https://i.imgur.com/TzbNrPm.png" width="400"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About
+<p align="center"><img height="300" src="https://i.imgur.com/xpq47Ja.png"></p>
+This is a demo implementation of a software that allows you to launch a rover into Mars and control it's movements. A mission is considered successful when it runs all the input commands  and does not encounter an obstacle or tries to access a coord out of the map's bounds.
 
-## About Laravel
+## Considerations
+- The available map is a square, 100x100 grid starting at x=0 y=0 (top-left corner) and ending
+at x=99 y=99 (bottom-right corner). This is for front-end purposes (read below).
+- The map is represented in a 600x600 px grid-like canvas where each square is 6x6 and represents a single coord (0,0).
+- Bigger maps are supported but it's easier to represent a 600x600 canvas for this demo.
+- Every time the rover turns right or left, we also update the orientation. Eg: If the rover is facing north and turns right, it's now facing east.
+- Obstacles are generated randomly after the rover has been launched to a specific position.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Clone the repository into your desired workspace.
+```sh
+git clone https://github.com/DvAlonso/MarsRover.git
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Install the dependencies.
+```sh
+composer install
+```
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Copy .env.example into .env
+```sh
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Within .env, change the following values to your database config.
+```sh
+DB_DATABASE=<yourdb>
+DB_USERNAME=<yourdb_username>
+DB_PASSWORD=<yourdb_password>
+```
 
-## Laravel Sponsors
+Generate a key for this project.
+```sh
+php artisan key:generate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Refresh the configuration cache.
+```sh
+php artisan config:cache
+```
 
-### Premium Partners
+Run the migrations
+```sh
+php artisan migrate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+Configurate nginx, apache or your desired web server or even run artisan serve locally:
+```sh
+php artisan serve
+```
 
-## Contributing
+## Usage
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Navigate to the landing page of your project. In this landing page you can either run a new mission or review an existing mission. Missions are saved with it's state so you can leave and come back to them anytime.
 
-## Code of Conduct
+#### Starting a new mission
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+When you start a new mission you can either input two coords (X,Y) within the 0 <= coord <= 99 range or leave blank for a randomly-generated starting point.
 
-## Security Vulnerabilities
+#### Previewing the mission map
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Once you've launched the rover into mars, and after a short delay (I mean, we're communicating to mars...), you'll get a preview of the surroundings of the rover. You will also be sent the current orientation of the rover, again, randomly generated.
+
+#### Inputting the movement commands
+
+After you've carefully reviewed (I hope) the map of the mission, you can input the movement commands into the top-left textarea. Accepted commands are R (right) F (forward) and L (left). You can run any combination of those, eg: FRRFFFLFRFLRFRFLR - FFFFFFFFFFFLRRRRRRR etc.
+
+#### Moving the rover
+
+Once you've sent the commands to the rover and after a short processing delay (not really) you will receive a new map with the mission result that can be either:
+
+- Completed
+- Aborted (right before an obstacle or before exiting the map bounds)
+
+In this map you'll be able to see the path travelled by the rover.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Mars Rover demo is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
