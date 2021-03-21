@@ -19,11 +19,6 @@ Route::get('/', function () {
     return view('landing');
 })->name('home');
 
-Route::get('/test', function () {
-    $mission = Mission::find(1);
-    return $mission->moveRover();
-});
-
 Route::get('/mission', [MissionController::class, 'start'])->name('mission.new');
 Route::get('/mission/{mission}', [MissionController::class, 'view'])->name('mission.view');
 

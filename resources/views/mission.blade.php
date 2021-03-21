@@ -14,10 +14,15 @@
             -moz-appearance: textfield;
         }
 
-        #mission-map {
-            border-style: outset;
+        canvas#mission-map {
             border-width: 3px;
             border-color: #11AEFA;
+            border-style: outset;
+        }
+        #canvas-wrapper {
+            border-width: 3px;
+            border-color: #11AEFA;
+            border-style: outset;
         }
 
         #main-card {

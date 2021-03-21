@@ -29,7 +29,7 @@ const app = {
       }
     })
 
-    // On form submit
+    // On form submit make sure the value is not empty and matches RFL chars
     $(document).on('submit', '#commands-form', function (event) {
       event.preventDefault()
       let re = new RegExp('^[rRlLfF]*$')
@@ -44,6 +44,10 @@ const app = {
       }
     })
 
+    /**
+     * On load map event (emited by the component being rendered)
+     * Draw the map, the rover and the randomly generated obstacles
+     */
     Livewire.on('loadMap', (data) => {
       if (map == null) {
         map = new MissionMap()
@@ -52,6 +56,12 @@ const app = {
       map.drawObstacles(data.obstacles)
     })
 
+    /**
+     * On load finished map event (emited by the component being rendered)
+     * Draw the map, with the rover and it's travelled path and obstacles
+     * Converts the canvas into an image so we can zoom
+     * Inserts the output into the <pre> tag so we can see the rover's output
+     */
     Livewire.on('loadFinishedMap', (data) => {
       map = new MissionMap()
       map.drawObstacles(data.obstacles)
@@ -59,22 +69,27 @@ const app = {
       map.drawStartingPoint(data.starting_x, data.starting_y)
       map.drawRover(data.x, data.y)
 
+      // Convert the canvas to an image so we can zoom / drag around
       let canvasAsDataUrl = document.getElementById('mission-map').toDataURL()
       $('#mission-map').remove()
       let img = document.createElement('img')
       img.id = 'mission-map'
       img.src = canvasAsDataUrl
-      img.style.width = '600px'
-      img.style.height = '600px'
       $('#canvas-wrapper').append(img)
+      wheelzoom(document.querySelectorAll('#mission-map'));
 
       $('#output').text(JSON.stringify(data.output, undefined, 2).replace('[', '{').replace(']', '}'))
 
-      wheelzoom(document.querySelectorAll('#mission-map'));
     })
 
   },
 
+  /**
+   * Launches the rover into the specified position
+   * @param int x 
+   * @param int y 
+   * @param string mission 
+   */
   launchRover: function (x, y, mission) {
     Livewire.emit('loading', 'Launching rover into coordinates...')
     axios.post('/api/mission/launch', {
@@ -88,6 +103,11 @@ const app = {
       })
   },
 
+  /**
+   * Sends the commands to the rover
+   * @param string commands 
+   * @param string mission 
+   */
   sendCommandsToRover: function (commands, mission) {
     Livewire.emit('loading', 'Sending input commands to the rover...')
     axios.post('/api/mission/commands', {

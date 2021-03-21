@@ -9,6 +9,7 @@ class MissionMap {
    * Draws the coordinates grid within the canvas
    */
   drawGrid () {
+    
     // Get canvas and 2D context
     let mapCanvas = document.getElementById("mission-map")
     let context = mapCanvas.getContext("2d")
@@ -53,6 +54,8 @@ class MissionMap {
 
   /**
    * Draws a red dot representing an obstacle
+   * @param int x
+   * @param int y
    */
   drawObstacle (x,y) {
     let scaledX = x*(this.gridScale)
@@ -61,6 +64,11 @@ class MissionMap {
     this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
   }
 
+  /**
+   * Given an array of output, renders each one as a single 
+   * blue dot (rover's travelled path)
+   * @param array output 
+   */
   drawOutput (output) {
     output.forEach(element => {
       if(element.couldMove) {
@@ -69,6 +77,11 @@ class MissionMap {
     })
   }
 
+  /**
+   * Draws a single dot representing the rover's travelled path
+   * @param int x 
+   * @param int y 
+   */
   drawPath (x, y) {
     let scaledX = x*(this.gridScale)
     let scaledY = y*(this.gridScale)
@@ -76,6 +89,11 @@ class MissionMap {
     this.context.fillRect(scaledX,scaledY,this.gridScale,this.gridScale)
   }
 
+  /**
+   * Draws a single dot representing the rover's starting position
+   * @param int x 
+   * @param int y 
+   */
   drawStartingPoint (x, y) {
     let scaledX = x*(this.gridScale)
     let scaledY = y*(this.gridScale)
